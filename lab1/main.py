@@ -42,7 +42,7 @@ def plot_binary():
     
     for i in range(10000, 1000000, 5000):
         x_vals.append(i)
-        y_vals.append(run_linear(i))
+        y_vals.append(run_binary(i))
 
     plt.plot(x_vals, y_vals)
     plt.title("Binary Search")

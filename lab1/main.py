@@ -40,7 +40,7 @@ def plot_binary():
     x_vals = []
     y_vals = []
     
-    for i in range(10000, 1000000, 5000):
+    for i in range(100000, 10000000, 50000):
         x_vals.append(i)
         y_vals.append(run_binary(i))
 

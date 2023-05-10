@@ -17,6 +17,12 @@ class KSTestCase(unittest.TestCase):
         
         b = self.ks.BFKS01(self.cap2, self.profit2, self.weight2)
         self.assertEqual(b, 2517)
+        
+        a_frac = self.ks.BFKSfrac(self.cap1, self.profit1, self.weight1)
+        self.assertEqual(a_frac, 122.0)
+        
+        b_frac = self.ks.BFKSfrac(self.cap2, self.profit2, self.weight2)
+        self.assertEqual(b_frac, 2518.3818181818183)
     
     def test_greedy(self):
         a = self.ks.greedyKS(self.cap1, self.profit1, self.weight1)

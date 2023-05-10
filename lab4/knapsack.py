@@ -1,5 +1,3 @@
-from itertools import product
-
 def bin_string(n):
     return [ bin(x)[2:].rjust(n,'0') for x in range(2**n) ]
 
@@ -22,33 +20,43 @@ class Knapsack:
         print(maxp)
         return maxp[1]
         
-    # def BFKSfrac(self, cap, p, w, len):
-    #     maxP = 0
-    #     soln_set = [format(x, '03b') for x in range(2**len)]
+    def BFKSfrac(self, cap, p, w):
+        assert len(p) == len(w), "p and w do not have the same number"
+        n = len(p)
+        binary_list = bin_string(n)
+        
+        maxP = 0
+        for s in binary_list:
+            z = []
+            for i, x in enumerate(s):
+                if x == '0':
+                    z.append(i)
 
-    #     for soln in soln_set:
-    #         i_element = []
-    #         for i, x in enumerate(soln):
-    #             if x == '0':
-    #                 i_element.append(i)
+            profit = sum(int(s[i])*p[i] for i in range(n))
+            weight = sum(int(s[i])*w[i] for i in range(n))
+            fraction = 0
 
-    #         profit = sum([int(soln[i])*p[i] for i in range(len)])
-    #         weight = sum([int(soln[i])*w[i] for i in range(len)])
+            if weight < cap:
+                for i in z:
+                    remaining = cap - weight
+                    if remaining < w[i]:
+                        remain = remaining
+                    else:
+                        remain = w[i]
+                    
+                    frac = (p[i] / w[i]) * remain
+            
+                    if frac > fraction:
+                        fraction = frac 
+                    else:
+                        fraction = 0
+                
+            profit += fraction
 
-    #         fraction = 0
-    #         if weight < cap:
-    #             for i in i_element:
-    #                 remain = min(w[i], cap - w[i])
-    #                 frac_val = p[i] / w[i] * remain
-    #                 if frac_val > fraction:
-    #                     fraction = frac_val
-
-    #         profit += fraction
-
-    #         if weight <= cap and profit >= maxP:
-    #             maxP = profit
-
-    #     return (maxP)
+            if weight <= cap and profit >= maxP:
+                maxP = profit
+                
+        return maxP
 
     def greedyKS(self, cap, p, w):
         assert len(w) == len(p)
@@ -93,4 +101,3 @@ class Knapsack:
                 
         result.pop(0)
         return(k[len][cap])
-
